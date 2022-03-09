@@ -13,6 +13,11 @@ interface IUserRegisterData {
     password: string;
 }
 
+interface IUserLoginData {
+    email: string;
+    password: string;
+}
+
 //Regex
 const emailRegex = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
 const passwordRegex = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/);
@@ -61,12 +66,16 @@ export const registerUser = async (req: express.Request,res: express.Response) =
         if(err.code && err.code === 11000) {
             return res.status(400).send({status:400,message:"Email already exists in the database"})
         }
-        res.status(500).send("Internal Server Error");
+        res.status(500).send({status:500,message:"Internal Server Error"});
     }
 }
 
-export const loginUser = async (req: express.Request,res: express.Response) => {
 
+//This functions does the following:
+// - Locate a user in the database
+// - Create a token and save it as a cookie on the response
+export const loginUser = async (req: express.Request,res: express.Response) => {
+    //TODO: create this function to enable client side login
 }
 
 export const logoutUser = async (req: express.Request,res: express.Response) => {
